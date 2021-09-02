@@ -112,6 +112,7 @@ class Player:
                 self.falling_counter = 0
                 self.state = 0
             if click_up:
+                self.jump_number += 1
                 self.jump_count = 0
                 self.state = 2
 

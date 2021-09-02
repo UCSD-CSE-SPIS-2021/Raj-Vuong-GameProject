@@ -45,7 +45,7 @@ class Charging_Enemy:
             else:
                 self.direction = not self.direction
         
-    def charging(self, direction):
+    def charging(self, direction, player):
         if self.charge_state == 1:
             self.direction = direction
             self.charge_count += 1
@@ -53,6 +53,8 @@ class Charging_Enemy:
                 self.charge_state = 2
                 self.charge_count = 0
         elif self.charge_state == 2:
+            if self.rect.colliderect(player.rect):
+                player.decrement_health()
             if self.rect.left > self.left_bound and not self.direction:
                 self.rect.move_ip(-self.charge_speed,0)
             elif self.rect.right < self.right_bound and self.direction:
@@ -69,13 +71,10 @@ class Charging_Enemy:
             player_direction = True
             if player.rect.right < self.rect.left:
                 player_direction = False
-            self.charging(player_direction)
+            self.charging(player_direction, player)
         if player.rect.left < self.right_bound and player.rect.right > self.left_bound and player.rect.bottom > self.rect.top and player.rect.top < self.rect.bottom and self.charge_state == 0:
             self.charge_state = 1
-        
-        if self.rect.colliderect(player.rect):
-            player.decrement_health()
-        
+                
         if self.health <= 0:
             return False
         return True

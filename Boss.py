@@ -84,16 +84,17 @@ class Boss:
             if self.charge_count > 90:
                 self.charge_state = 2
                 self.charge_count = 0
-                self.degree = math.atan2(player.rect.top-(self.rect.top+self.rect.bottom)//2, player.rect.left - (self.rect.left+self.rect.right)//2)
+                self.degree = math.atan2(player.rect.top-(self.rect.bottom-20), player.rect.left - (self.rect.left+self.rect.right)/2)
                 self.dx = 10*math.cos(self.degree)
                 self.dy = 10*math.sin(self.degree)
         elif self.charge_state == 2:
+            if self.collide(player.rect, player.mask):
+                player.decrement_health()
             if self.rect.bottom + self.dy < 563 and self.rect.top + self.dy > 0 and self.rect.left + self.dx > 0 and self.rect.right + self.dx < 1000:
                 self.rect.move_ip(self.dx, self.dy)
             else:
                 self.charge_state = 1
-        if self.collide(player.rect, player.mask):
-            player.decrement_health()
+        
             
     def decrement_health(self):
         self.health -= 10

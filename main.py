@@ -71,7 +71,7 @@ step_size = 5
 step_size_fall = 2
 jump_size = 10
 
-cur_lvl = 1
+cur_lvl = 5
 
 frame_counter = 0
 
